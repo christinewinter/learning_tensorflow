@@ -1,3 +1,7 @@
+# This are code snippets from the course ML data lifecycle in production
+# The full code can be found here:
+# https://github.com/amanchadha/coursera-machine-learning-engineering-for-prod-mlops-specialization/blob/main/C2%20-%20Machine%20Learning%20Data%20Lifecycle%20in%20Production/Week%202/C2W2_Assignment_Updated.ipynb
+
 import os
 
 import tensorflow as tf
@@ -9,7 +13,6 @@ from tfx.components import StatisticsGen
 from tfx.components import Transform
 
 import tensorflow_transform.beam as tft_beam
-from google.protobuf.json_format import MessageToDict
 from tensorflow_transform.tf_metadata import dataset_metadata, schema_utils
 from tfx.orchestration.experimental.interactive.interactive_context import InteractiveContext
 
