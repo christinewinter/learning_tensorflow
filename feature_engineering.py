@@ -29,6 +29,7 @@ _data_filepath = os.path.join(_data_root, 'metro_traffic_volume.csv')
 context = InteractiveContext(pipeline_root=_pipeline_root)
 
 # Instantiate ExampleGen with the input CSV dataset
+# https://www.tensorflow.org/tfx/guide/examplegen
 example_gen = CsvExampleGen(input_base=_data_root)
 
 # Run the component using the InteractiveContext instance
@@ -49,6 +50,7 @@ tfrecord_filenames = [os.path.join(train_uri, name)
 dataset = tf.data.TFRecordDataset(tfrecord_filenames, compression_type="GZIP")
 
 # Instantiate StatisticsGen with the ExampleGen ingested dataset
+# https://www.tensorflow.org/tfx/guide/statsgen
 statistics_gen = StatisticsGen(examples=example_gen.outputs['examples'])
 
 # Run the component
@@ -58,6 +60,7 @@ context.run(statistics_gen)
 context.show(statistics_gen.outputs['statistics'])
 
 # Instantiate SchemaGen with the output statistics from the StatisticsGen
+# https://www.tensorflow.org/tfx/guide/schemagen
 schema_gen = SchemaGen(statistics=statistics_gen.outputs['statistics'])
 
 # Run the component
@@ -67,6 +70,7 @@ context.run(schema_gen)
 context.show(schema_gen.outputs['schema'])
 
 # Instantiate ExampleValidator with the statistics and schema from the previous steps
+# https://www.tensorflow.org/tfx/guide/exampleval
 example_validator = ExampleValidator(statistics=statistics_gen.outputs['statistics'],
                                      schema=schema_gen.outputs['schema'])
 
@@ -101,6 +105,7 @@ transformed_data, transformed_metadata = transformed_dataset
 
 # Instantiate the Transform component
 # transform_module_file contains a python module where the transformations are defined in
+# https://www.tensorflow.org/tfx/guide/transform
 transform = Transform(
     examples=example_gen.outputs['examples'],
     schema=schema_gen.outputs['schema'],
